@@ -1,17 +1,20 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const Keyword = () => {
+const Posts = () => {
     
     const params = useParams();
-    const keyword = params.id;
-    console.log(keyword);
+    const posts = params.id;
+    console.log(posts);
 
     return ( 
         <div>
-            <span>Keyword</span>
+            <span>Posts</span>
         </div>
     )
 }
 
-export default Keyword;
+export default Posts;
+
+
+
