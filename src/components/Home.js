@@ -1,12 +1,11 @@
 import React from 'react';
 import PostCard from './Card';
 
-const Home = ({posts}) => {
+const Home = ({posts, likePost}) => {
 
     // useEffect(() => {
     //     console.log(posts)
     // }, [posts])
-
 
 
     return ( 
@@ -23,6 +22,9 @@ const Home = ({posts}) => {
                     image={item.image}
                     title={item.title}
                     user={item.user}
+                    id={item.id}                            
+                    likePost={likePost}
+
                     />
                 )
             })}

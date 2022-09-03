@@ -7,6 +7,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import Header from './components/Header';
 import Board from './components/Board';
 import { db } from './firebase';
+import { doc, updateDoc } from "firebase/firestore";
+
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -29,6 +31,20 @@ function App() {
     }
   }, [])
 
+  const likePost = async (id) => {
+  console.log(id)
+  let postIndex = posts.findIndex((item) => item.id === id)
+  if (postIndex !== -1) {
+    const newArr = posts.slice();
+    let newLikes = newArr[postIndex].likes + 1
+    newArr[postIndex].likes++
+    setPosts(newArr);
+    const post = doc(db, "posts", "n3Rg1RbzgOJY9LFuZIv1");
+    await updateDoc(post, {
+      likes: newLikes
+    })
+  }}
+
 
   return (
     <div className="App">
@@ -38,7 +54,7 @@ function App() {
           <Route path="/post/:id" element={<Post />} />
           <Route path="/user/:id" element={<User />} />
           <Route path="/board/:id" element={<Board />} />
-          <Route exact path="/" element={<Home posts={posts} />} /> 
+          <Route exact path="/" element={<Home posts={posts} likePost={likePost} />} /> 
         </Routes>
       </BrowserRouter>      
     </div>

@@ -5,7 +5,6 @@ const Post = () => {
     
     const params = useParams();
     const post = params.id;
-    console.log(post);
 
     return ( 
         <div>
