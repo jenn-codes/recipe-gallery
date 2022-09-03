@@ -1,12 +1,30 @@
-import React from 'react';
-import Posts from './Posts';
+import React, { useEffect, useState, useRef } from 'react';
+import Card from './Card';
 
-const Home = () => {
-    
+const Home = ({posts}) => {
+
+    useEffect(() => {
+        console.log(posts)
+    }, [posts])
+
+
+
     return ( 
         <div>
             <span>Home Page</span>
-            <Posts />
+            {posts.map(item => {
+                return (
+                    <Card key={item.id}
+                    board={item.board}
+                    likes={item.likes}
+                    comments={item.comments.length}
+                    time={item.time}
+                    body={item.body}
+                    image={item.image}
+                    user={item.user}
+                    />
+                )
+            })}
         </div>
     )
 }
