@@ -39,7 +39,12 @@ function App() {
     let newLikes = newArr[postIndex].likes + 1
     newArr[postIndex].likes++
     setPosts(newArr);
-    const post = doc(db, "posts", "n3Rg1RbzgOJY9LFuZIv1");
+
+    const ref = await db.collection('posts').where('id', '==', id).get();
+    console.log(ref)
+    const docRefId = ref.docs[0].id;
+    const post = doc(db, "posts", docRefId);
+
     await updateDoc(post, {
       likes: newLikes
     })
@@ -53,7 +58,7 @@ function App() {
         <Routes>
           <Route path="/post/:id" element={<Post />} />
           <Route path="/user/:id" element={<User />} />
-          <Route path="/board/:id" element={<Board />} />
+          <Route path="/board/:id" element={<Board posts={posts}  likePost={likePost} />} />
           <Route exact path="/" element={<Home posts={posts} likePost={likePost} />} /> 
         </Routes>
       </BrowserRouter>      

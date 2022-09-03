@@ -28,7 +28,7 @@ const PostCard = ({ board, likes, comments, title, time, image, user, body, id, 
                         Posted in <Link to={`/board/${board}/`}>{board}</Link>
                     </Typography>
                     <Typography variant="caption" align="left" component="div">
-                        Posted by <Link to={`/user/${user}/`}>{user}</Link>
+                        Posted on {date} by <Link to={`/user/${user}/`}>{user}</Link>
                     </Typography>
                     <Link to={`/post/${id}/`} style={{ textDecoration: 'none' }}>
                     <Typography variant="h4" align="left" color="black" component="div">
