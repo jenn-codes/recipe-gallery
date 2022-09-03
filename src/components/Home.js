@@ -1,11 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
-import Card from './Card';
+import React from 'react';
+import PostCard from './Card';
 
 const Home = ({posts}) => {
 
-    useEffect(() => {
-        console.log(posts)
-    }, [posts])
+    // useEffect(() => {
+    //     console.log(posts)
+    // }, [posts])
 
 
 
@@ -14,13 +14,14 @@ const Home = ({posts}) => {
             <span>Home Page</span>
             {posts.map(item => {
                 return (
-                    <Card key={item.id}
+                    <PostCard key={item.id}
                     board={item.board}
                     likes={item.likes}
                     comments={item.comments.length}
                     time={item.time}
                     body={item.body}
                     image={item.image}
+                    title={item.title}
                     user={item.user}
                     />
                 )
