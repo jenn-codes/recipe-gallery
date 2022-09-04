@@ -22,10 +22,10 @@ const PostCard = ({ board, likes, comments, title, time, image, user, body, id, 
 
     return (
         <div className='card'>
-            <Card sx={{ maxWidth: 555 }}>
+            <Card sx={{ width: 600 }}>
                 <CardContent>
                     <Typography variant="caption" align="right" component="div">
-                        Posted in <Link to={`/board/${board}/`}>{board}</Link>
+                        Posted under <Link to={`/board/${board}/`}>{board}</Link>
                     </Typography>
                     <Typography variant="caption" align="left" component="div">
                         Posted on {date} by <Link to={`/user/${user}/`}>{user}</Link>
