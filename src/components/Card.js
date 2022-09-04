@@ -11,7 +11,16 @@ import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined
 import { Link } from 'react-router-dom';
 
 
-const PostCard = ({ board, likes, comments, title, time, image, user, body, id, likePost }) => {
+const PostCard = ({ board, 
+                    likes, 
+                    comments, 
+                    title, 
+                    time, 
+                    image, 
+                    user, 
+                    body, 
+                    id, 
+                    likePost }) => {
 
     console.log(comments);
     let date = new Date(time*1000).toISOString().toLocaleString("en-US").slice(5,10)
@@ -47,7 +56,9 @@ const PostCard = ({ board, likes, comments, title, time, image, user, body, id, 
                     </Typography>
                     <CardActions>
                         <Button size="small" onClick={() => handleLike(id)}><ArrowCircleUpOutlinedIcon /> {likes} likes </Button>
+                        <Link to={`/post/${id}/`} style={{ textDecoration: 'none' }}>
                         <Button size="small"><ChatBubbleOutlineIcon />{comments} comments</Button>
+                        </Link>
                     </CardActions>
                 </CardContent>
             </Card>

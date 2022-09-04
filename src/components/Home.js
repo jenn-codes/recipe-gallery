@@ -10,7 +10,6 @@ const Home = ({posts, likePost}) => {
 
     return ( 
         <div>
-            <span>Home Page</span>
             {posts.map(item => {
                 return (
                     <PostCard key={item.id}
