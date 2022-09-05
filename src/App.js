@@ -32,22 +32,21 @@ function App() {
   }, [])
 
   const likePost = async (id) => {
-  console.log(id)
-  let postIndex = posts.findIndex((item) => item.id === id)
-  if (postIndex !== -1) {
-    const newArr = posts.slice();
-    let newLikes = newArr[postIndex].likes + 1
-    newArr[postIndex].likes++
-    setPosts(newArr);
+    console.log(id)
+    let postIndex = posts.findIndex((item) => item.id === id)
+    if (postIndex !== -1) {
+      const newArr = posts.slice();
+      let newLikes = newArr[postIndex].likes + 1
+      newArr[postIndex].likes++
+      setPosts(newArr);
 
-    const ref = await db.collection('posts').where('id', '==', id).get();
-    console.log(ref)
-    const docRefId = ref.docs[0].id;
-    const post = doc(db, "posts", docRefId);
-
-    await updateDoc(post, {
-      likes: newLikes
-    })
+      const ref = await db.collection('posts').where('id', '==', id).get();
+      console.log(ref)
+      const docRefId = ref.docs[0].id;
+      const post = doc(db, "posts", docRefId);
+      await updateDoc(post, {
+        likes: newLikes
+      })
   }}
 
 
@@ -56,7 +55,7 @@ function App() {
       <BrowserRouter basename= {process.env.PUBLIC_URL}>
         <Header />
         <Routes>
-          <Route path="/post/:id" element={<Post />} />
+          <Route path="/post/:id" element={<Post posts={posts}  likePost={likePost} />} />
           <Route path="/user/:id" element={<User />} />
           <Route path="/board/:id" element={<Board posts={posts}  likePost={likePost} />} />
           <Route exact path="/" element={<Home posts={posts} likePost={likePost} />} /> 

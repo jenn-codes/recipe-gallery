@@ -1,7 +1,12 @@
 .card {
-    width: 500px;
+    width: 600px;
     margin: auto;
     margin-top: 20px;
+}
+
+.comments {
+    width: 600px;
+    margin: auto;
 }
 
 /* .card img {

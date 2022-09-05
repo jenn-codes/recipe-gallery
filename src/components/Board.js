@@ -1,6 +1,7 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import PostCard from './Card';
+import Typography from '@mui/material/Typography';
 
 
 const Board = ({ posts, likePost }) => {
@@ -11,7 +12,11 @@ const Board = ({ posts, likePost }) => {
 
     return ( 
         <div>
-            <span>Board</span>
+
+            <Typography variant="h6">
+            {board}
+            </Typography>
+
             {filteredPosts.map(item => {
                 return (
                     <PostCard key={item.id}

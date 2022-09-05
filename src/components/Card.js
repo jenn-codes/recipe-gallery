@@ -20,7 +20,9 @@ const PostCard = ({ board,
                     user, 
                     body, 
                     id, 
-                    likePost }) => {
+                    likePost,
+                    url
+                }) => {
 
     console.log(comments);
     let date = new Date(time*1000).toISOString().toLocaleString("en-US").slice(5,10)
@@ -28,6 +30,8 @@ const PostCard = ({ board,
     const handleLike = (id) => {
         likePost(id);
     }
+
+    console.log(url)
 
     return (
         <div className='card'>

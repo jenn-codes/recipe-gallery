@@ -6,6 +6,8 @@ const User = () => {
     const params = useParams();
     const user = params.id;
 
+    console.log(user)
+
     return ( 
         <div>
             <span>User</span>

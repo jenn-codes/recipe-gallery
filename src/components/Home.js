@@ -23,6 +23,7 @@ const Home = ({posts, likePost}) => {
                     user={item.user}
                     id={item.id}                            
                     likePost={likePost}
+                    
 
                     />
                 )
