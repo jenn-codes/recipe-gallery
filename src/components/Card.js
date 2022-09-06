@@ -58,6 +58,9 @@ const PostCard = ({ board,
                     <Typography variant="body2" align="left" color="text.secondary">
                         {body}
                     </Typography>
+                    <Typography variant="caption" align="left" component="div">
+                        <Link to="{url}">{url}</Link>
+                    </Typography>
                     <CardActions>
                         <Button size="small" onClick={() => handleLike(id)}><ArrowCircleUpOutlinedIcon /> {likes} likes </Button>
                         <Link to={`/post/${id}/`} style={{ textDecoration: 'none' }}>

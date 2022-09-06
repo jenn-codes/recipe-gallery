@@ -3,9 +3,6 @@ import PostCard from './Card';
 
 const Home = ({posts, likePost}) => {
 
-    // useEffect(() => {
-    //     console.log(posts)
-    // }, [posts])
 
 
     return ( 

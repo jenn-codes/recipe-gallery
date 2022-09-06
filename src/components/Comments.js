@@ -12,33 +12,27 @@ import Avatar from '@mui/material/Avatar';
 const Comments = ({ comments }) => {
 
 
-
-
     return (
         <div className="comments">
-            <span>Comments</span>
             <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
                 {comments.map(item => {
                     return (     
-                        <div>
+                        <div key={uniqid}>
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <Avatar sx={{bgcolor: 'darkorange'}}>{item.user[0]}</Avatar>
+                                </ListItemAvatar>
 
-                        <ListItem alignItems="flex-start" key={uniqid}>
-                            <ListItemAvatar>
-                                <Avatar sx={{bgcolor: 'darkorange'}}>{item.user[0]}</Avatar>
-
-                            </ListItemAvatar>
-
-                            <ListItemText
-                            primary={item.comment}
-                            secondary={
-                                <React.Fragment>
-
-                                    -{item.user}
-                                </React.Fragment>
-                            }
-                            />
-                        </ListItem>
-                        <Divider  />
+                                <ListItemText
+                                primary={item.comment}
+                                secondary={
+                                    <React.Fragment>
+                                        {item.user}
+                                    </React.Fragment>
+                                }
+                                />
+                            </ListItem>
+                            <Divider  />
 
                         </div>         
 

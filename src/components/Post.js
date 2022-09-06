@@ -8,28 +8,28 @@ const Post = ({ posts, likePost }) => {
     
     const params = useParams();
     const postId = params.id;
-    const currPost = posts.filter((item) => item.id === parseInt(postId))
+    let currPost = posts.filter((item) => item.id === parseInt(postId))
+    currPost = currPost[0]
     console.log(currPost);
 
 
     return ( 
         <div>
            <PostCard 
-                    board={currPost[0].board}
-                    likes={currPost[0].likes}
-                    time={currPost[0].time.seconds}
-                    body={currPost[0].body}
-                    image={currPost[0].image}
-                    title={currPost[0].title}
-                    user={currPost[0].user}
+                    board={currPost.board}
+                    likes={currPost.likes}
+                    time={currPost.time.seconds}
+                    body={currPost.body}
+                    image={currPost.image}
+                    title={currPost.title}
+                    user={currPost.user}
                     likePost={likePost}
-                    comments={currPost[0].comments.length}
-                    id={currPost[0].id}
-                    url={currPost[0].url}
+                    comments={currPost.comments.length}
+                    id={currPost.id}
+                    url={currPost.url}
             />
-
             <Comments 
-                    comments={currPost[0].comments}
+                    comments={currPost.comments}
             />
 
            
