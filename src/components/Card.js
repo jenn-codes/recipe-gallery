@@ -11,7 +11,8 @@ import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined
 import ArrowCircleDownOutlinedIcon from '@mui/icons-material/ArrowCircleDownOutlined';
 import { Link } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
-
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import ShortcutIcon from '@mui/icons-material/Shortcut';
 
 const PostCard = ({ board, 
                     likes, 
@@ -26,15 +27,30 @@ const PostCard = ({ board,
                     url
                 }) => {
 
-    console.log(comments);
     let date = new Date(time*1000).toISOString().toLocaleString("en-US").slice(5,10)
 
     const handleLike = (id) => {
         likePost(id);
     }
 
-    console.log(url)
+    const sharePost = (id) => {
+        const customUrl = process.env.PUBLIC_URL + "/post/" + id;
+        navigator.clipboard.writeText(customUrl).then(() => {    
+    }) }
 
+    const savePost = (id) => {
+        console.log(id)
+        let savedPosts = [];
+        savedPosts = window.localStorage.getItem('saved') ?
+                JSON.parse(window.localStorage.getItem('saved')) :
+                [];
+        let newPosts = [...savedPosts, id];
+        console.log(newPosts);
+        window.localStorage.setItem('saved', JSON.stringify(newPosts))
+    }
+
+
+    
     return (
         <div className='card'>
             <Card sx={{ width: 600 }}>               
@@ -73,8 +89,10 @@ const PostCard = ({ board,
                         <CardActions>
                             
                             <Link to={`/post/${id}/`} style={{ textDecoration: 'none' }}>
-                                <Button size="small"><ChatBubbleOutlineIcon />{comments} comments</Button>
+                                <Button size="small"><ChatBubbleOutlineIcon /> {comments} comments</Button>
                             </Link>
+                            <Button size="small" onClick={() => sharePost(id)} ><ShortcutIcon /> share</Button>
+                            <Button size="small" onClick={() => savePost(id)} ><BookmarkBorderIcon /> save</Button>
                         </CardActions>
                     </CardContent>
                     </Grid>
