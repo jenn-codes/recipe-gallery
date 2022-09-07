@@ -4,7 +4,7 @@ import PostCard from './Card';
 import Typography from '@mui/material/Typography';
 
 
-const Board = ({ posts, likePost }) => {
+const Board = ({ posts, likePost, dislikePost }) => {
     
     const params = useParams();
     const board = params.id;
@@ -30,6 +30,8 @@ const Board = ({ posts, likePost }) => {
                     user={item.user}
                     id={item.id}                            
                     likePost={likePost}
+                    dislikePost={dislikePost}
+
 
                     />
                 )

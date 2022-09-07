@@ -1,7 +1,7 @@
 import React from 'react';
 import PostCard from './Card';
 
-const Home = ({posts, likePost}) => {
+const Home = ({posts, likePost, dislikePost}) => {
 
 
 
@@ -20,6 +20,7 @@ const Home = ({posts, likePost}) => {
                     user={item.user}
                     id={item.id}                            
                     likePost={likePost}
+                    dislikePost={dislikePost}
                     
 
                     />

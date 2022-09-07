@@ -4,13 +4,12 @@ import PostCard from './Card';
 import Comments from './Comments';
 
 
-const Post = ({ posts, likePost }) => {
+const Post = ({ posts, likePost, dislikePost }) => {
     
     const params = useParams();
     const postId = params.id;
     let currPost = posts.filter((item) => item.id === parseInt(postId))
     currPost = currPost[0]
-    console.log(currPost);
 
 
     return ( 
@@ -24,6 +23,7 @@ const Post = ({ posts, likePost }) => {
                     title={currPost.title}
                     user={currPost.user}
                     likePost={likePost}
+                    dislikePost={dislikePost}
                     comments={currPost.comments.length}
                     id={currPost.id}
                     url={currPost.url}

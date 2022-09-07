@@ -104,7 +104,7 @@ const Search = styled('div')(({ theme }) => ({
           <Box sx={{ flexGrow: 0, justifySelf: "flex-end" }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} style={{align: "right"}} >
-                <Avatar  alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar  alt="Jennifer" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu

@@ -22,22 +22,38 @@ function App() {
         newArr.push(post.data());
       })
       setPosts(newArr)
-      // if (isMounted.current) {
-      //   setPosts(newArr)}
     }
     getData();
     return () => {
       isMounted.current = false;
     }
-  }, [])
+  }  )    
+
+
 
   const likePost = async (id) => {
-    console.log(id)
     let postIndex = posts.findIndex((item) => item.id === id)
     if (postIndex !== -1) {
       const newArr = posts.slice();
-      let newLikes = newArr[postIndex].likes + 1
+      // let newLikes = newArr[postIndex].likes + 1;
       newArr[postIndex].likes++
+      setPosts(newArr);
+
+      const ref = await db.collection('posts').where('id', '==', id).get();
+      const docRefId = ref.docs[0].id;
+      const post = doc(db, "posts", docRefId);
+      await updateDoc(post, {
+        likes: newArr[postIndex].likes
+      })
+  }}
+
+
+  const dislikePost = async (id) => {
+    let postIndex = posts.findIndex((item) => item.id === id)
+    if (postIndex !== -1) {
+      const newArr = posts.slice();
+      let newLikes = newArr[postIndex].likes - 1;
+      newArr[postIndex].likes--
       setPosts(newArr);
 
       const ref = await db.collection('posts').where('id', '==', id).get();
@@ -49,16 +65,15 @@ function App() {
       })
   }}
 
-
   return (
     <div className="App">
       <BrowserRouter basename= {process.env.PUBLIC_URL}>
         <Header />
         <Routes>
-          <Route path="/post/:id" element={<Post posts={posts}  likePost={likePost} />} />
+          <Route path="/post/:id" element={<Post posts={posts}  likePost={likePost} dislikePost={dislikePost} />} />
           <Route path="/user/:id" element={<User />} />
-          <Route path="/board/:id" element={<Board posts={posts}  likePost={likePost} />} />
-          <Route exact path="/" element={<Home posts={posts} likePost={likePost} />} /> 
+          <Route path="/board/:id" element={<Board posts={posts}  likePost={likePost} dislikePost={dislikePost} />} />
+          <Route exact path="/" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
         </Routes>
       </BrowserRouter>      
     </div>

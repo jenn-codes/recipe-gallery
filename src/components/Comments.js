@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 
 const Comments = ({ comments }) => {
 
-
     return (
         <div className="comments">
             <List sx={{ width: '100%', bgcolor: 'background.paper' }}>

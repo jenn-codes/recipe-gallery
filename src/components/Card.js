@@ -24,14 +24,12 @@ const PostCard = ({ board,
                     body, 
                     id, 
                     likePost,
+                    dislikePost,
                     url
                 }) => {
 
     let date = new Date(time*1000).toISOString().toLocaleString("en-US").slice(5,10)
 
-    const handleLike = (id) => {
-        likePost(id);
-    }
 
     const sharePost = (id) => {
         const customUrl = process.env.PUBLIC_URL + "/post/" + id;
@@ -39,26 +37,23 @@ const PostCard = ({ board,
     }) }
 
     const savePost = (id) => {
-        console.log(id)
         let savedPosts = [];
         savedPosts = window.localStorage.getItem('saved') ?
                 JSON.parse(window.localStorage.getItem('saved')) :
                 [];
         let newPosts = [...savedPosts, id];
-        console.log(newPosts);
         window.localStorage.setItem('saved', JSON.stringify(newPosts))
     }
 
 
-    
     return (
         <div className='card'>
             <Card sx={{ width: 600 }}>               
                 <Grid container  >
                     <Grid item xs={1} direction="column" container justifySelf="center">
-                        <Button align="left" size="small" onClick={() => handleLike(id)}><ArrowCircleUpOutlinedIcon /></Button>
+                        <Button align="left" size="small" onClick={() => likePost(id)}><ArrowCircleUpOutlinedIcon /></Button>
                         {likes} 
-                        <Button align="left" size="small"><ArrowCircleDownOutlinedIcon /></Button>
+                        <Button align="left" size="small" onClick={() => dislikePost(id)}><ArrowCircleDownOutlinedIcon /></Button>
                     </Grid>
                     <Grid item xs={11}>
                     <CardContent>
