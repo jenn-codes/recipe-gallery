@@ -6,12 +6,11 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import { Link } from "react-router-dom";
 
-const Filters = ({posts}) => {
+const Filters = () => {
 
-
+    
     return (
         <div>
-            <span>Popular Posts</span>
         
             <Box 
                 sx={{
@@ -27,28 +26,28 @@ const Filters = ({posts}) => {
                 }}
             >
 
-                <Typography variant="p" sx={{color: 'gray', borderRadius: 2,
+                <Typography className="sortHot" variant="p" sx={{color: 'gray', borderRadius: 2,
                                         "&:hover": {
                                             backgroundColor: '#EBECF0'
                                             }}} >
                     <Link to="/hot" style={{ textDecoration: 'none', color: 'gray'}}>                    
-                    <WhatshotIcon sx={{verticalAlign: 'middle'}} /> Hot
+                        <WhatshotIcon sx={{verticalAlign: 'middle'}} /> Hot
                     </Link>
                 </Typography>   
-                <Typography variant="p" sx={{color: 'gray', borderRadius: 2,
+                <Typography className="sortNew" variant="p" sx={{color: 'gray', borderRadius: 2,
                                         "&:hover": {
                                             backgroundColor: '#EBECF0'
                                                }}} >
                     <Link to="/new" style={{ textDecoration: 'none', color: 'gray'}}>                    
-                    <AccessTimeIcon sx={{verticalAlign: 'middle'}}/> New
+                        <AccessTimeIcon sx={{verticalAlign: 'middle'}}/> New
                     </Link>
                 </Typography>
-                <Typography variant="p" sx={{color: 'gray', borderRadius: 2,
+                <Typography className="sortTrending" variant="p" sx={{color: 'gray', borderRadius: 2,
                                         "&:hover": {
                                             backgroundColor: '#EBECF0'
                                             }}} >
                     <Link to="/trending" style={{ textDecoration: 'none', color: 'gray'}}>                    
-                    <TrendingUpIcon sx={{verticalAlign: 'middle'}}/> Trending
+                        <TrendingUpIcon sx={{verticalAlign: 'middle'}}/> Trending
                     </Link>
                 </Typography>   
 

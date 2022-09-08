@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import PostCard from './Card';
 import Typography from '@mui/material/Typography';
@@ -6,7 +6,6 @@ import Desserts from "../assets/desserts.jpg";
 import Mains from "../assets/mains.jpg";
 import Drinks from "../assets/drinks.jpg";
 import Box from '@mui/material/Box';
-import Filters from './Filters';
 
 
 
@@ -50,8 +49,6 @@ const Board = ({ posts, likePost, dislikePost }) => {
                     {board[0].toUpperCase()+board.slice(1,)}
                 </Typography>   
             </Box>
-
-            <Filters />
 
 
 

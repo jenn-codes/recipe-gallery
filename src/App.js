@@ -22,15 +22,10 @@ function App() {
         })
       setPosts(newArr);
       // window.localStorage.setItem('savedPosts', JSON.stringify(newArr))
-  
-    }
+      }
     getData();
 
   }, [])
-
-    
-
-
 
 
   const likePost = async (id) => {
@@ -59,7 +54,6 @@ function App() {
       setPosts(newArr);
 
       const ref = await db.collection('posts').where('id', '==', id).get();
-      console.log(ref)
       const docRefId = ref.docs[0].id;
       const post = doc(db, "posts", docRefId);
       await updateDoc(post, {
@@ -67,15 +61,21 @@ function App() {
       })
   }}
 
+
+
+
   return (
     <div className="App">
-      <BrowserRouter basename= {process.env.PUBLIC_URL}>
+      <BrowserRouter basename={process.env.PUBLIC_URL}>
         <Header />
         <Routes>
           <Route path="/post/:id" element={<Post posts={posts}  likePost={likePost} dislikePost={dislikePost} />} />
           <Route path="/user/:id" element={<User />} />
           <Route path="/board/:id" element={<Board posts={posts}  likePost={likePost} dislikePost={dislikePost} />} />
           <Route exact path="/" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
+          <Route exact path="/hot" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
+          <Route exact path="/new" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
+          <Route exact path="/trending" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
         </Routes>
       </BrowserRouter>      
     </div>
