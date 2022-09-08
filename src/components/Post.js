@@ -2,6 +2,8 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import PostCard from './Card';
 import Comments from './Comments';
+import CommentForm from './CommentForm';
+
 
 
 const Post = ({ posts, likePost, dislikePost }) => {
@@ -31,6 +33,7 @@ const Post = ({ posts, likePost, dislikePost }) => {
             <Comments 
                     comments={currPost.comments}
             />
+            <CommentForm postId={currPost.id} />
 
            
 
