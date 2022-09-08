@@ -2,12 +2,14 @@ import React from 'react';
 import PostCard from './Card';
 
 const Home = ({posts, likePost, dislikePost}) => {
+    console.log(posts.length === 0)
 
 
-
+    
     return ( 
         <div>
-            {posts.map(item => {
+            {posts.length !== 0 ?
+            posts.map(item => {
                 return (
                     <PostCard key={item.id}
                     board={item.board}
@@ -21,11 +23,11 @@ const Home = ({posts, likePost, dislikePost}) => {
                     id={item.id}                            
                     likePost={likePost}
                     dislikePost={dislikePost}
-                    
-
                     />
                 )
-            })}
+            }) :
+            <div>There are no posts.</div>
+            }
         </div>
     )
 }

@@ -3,6 +3,7 @@
   background-color: lightgray;
   
   padding-bottom: 100px;
+  min-height: 100vh;
 }
 
 .App-logo {
@@ -39,3 +40,5 @@
     transform: rotate(360deg);
   }
 }
+
+

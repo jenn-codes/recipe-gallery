@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Post from './components/Post';
 import User from './components/User';
 import Home from './components/Home';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Board from './components/Board';
 import { db } from './firebase';
@@ -12,22 +12,24 @@ import { doc, updateDoc } from "firebase/firestore";
 
 function App() {
   const [posts, setPosts] = useState([]);
-  const isMounted = useRef(true);
 
   useEffect(() => {
     let newArr = [];
     const getData = async () => {
       const initialPosts = await db.collection('posts').get();
       initialPosts.forEach((post) => {
-        newArr.push(post.data());
-      })
-      setPosts(newArr)
+          newArr.push(post.data());
+        })
+      setPosts(newArr);
+      // window.localStorage.setItem('savedPosts', JSON.stringify(newArr))
+  
     }
     getData();
-    return () => {
-      isMounted.current = false;
-    }
-  }  )    
+
+  }, [])
+
+    
+
 
 
 
