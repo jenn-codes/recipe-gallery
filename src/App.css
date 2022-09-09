@@ -9,6 +9,7 @@
   justify-items: right;
   align-items: right;
   gap: 10px;
+  margin: auto;
 }
 
 .App-logo {
@@ -48,8 +49,12 @@
 
 .sidebar {
   grid-column: 2;
-  width: 150px;
-  justify-self: left;
+  justify-self: flex-start;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  width: auto;
+  
 }
 
 .header {
@@ -66,3 +71,16 @@
   margin-bottom: 10px;
 }
 
+
+.boards-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 5px;
+}
+
+.card {
+  margin-bottom: 5px;
+}

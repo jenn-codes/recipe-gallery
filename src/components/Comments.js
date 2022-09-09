@@ -64,7 +64,7 @@ const Comments = ({ comments, postId }) => {
                         <div key={uniqid()}>
                             <ListItem alignItems="flex-start">
                                 <ListItemAvatar>
-                                    <Avatar sx={{bgcolor: 'darkorange'}}>{item.user}</Avatar>
+                                    <Avatar sx={{bgcolor: 'darkorange'}}>{item.user[0]}</Avatar>
                                 </ListItemAvatar>
 
                                 <ListItemText
