@@ -2,7 +2,6 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import PostCard from './Card';
 import Comments from './Comments';
-import CommentForm from './CommentForm';
 
 
 
@@ -11,7 +10,8 @@ const Post = ({ posts, likePost, dislikePost }) => {
     const params = useParams();
     const postId = params.id;
     let currPost = posts.filter((item) => item.id === parseInt(postId))
-    currPost = currPost[0]
+    currPost = currPost[0];
+    console.log(currPost)
 
 
     return ( 
@@ -32,8 +32,8 @@ const Post = ({ posts, likePost, dislikePost }) => {
             />
             <Comments 
                     comments={currPost.comments}
+                    postId={currPost.id}
             />
-            <CommentForm postId={currPost.id} />
 
            
 
