@@ -22,6 +22,7 @@ const Filters = () => {
                     display: 'flex',
                     gap: 3,
                     alignItems: 'center',
+                    justifyContent: 'space-evenly',
                     paddingLeft: 3
                 }}
             >

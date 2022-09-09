@@ -62,12 +62,12 @@ function App() {
   }}
 
 
-
-
   return (
-    <div className="App">
+    <div>
+      <Header />
+      <div className="App">
+
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Header />
         <Routes>
           <Route path="/post/:id" element={<Post posts={posts}  likePost={likePost} dislikePost={dislikePost} />} />
           <Route path="/user/:id" element={<User />} />
@@ -77,10 +77,10 @@ function App() {
           <Route exact path="/new" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/trending" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
         </Routes>
-        <Sidebar />
+        <Sidebar posts={posts}/>
 
       </BrowserRouter>      
-
+      </div>
     </div>
   )
 }

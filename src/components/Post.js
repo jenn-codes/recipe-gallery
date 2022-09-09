@@ -10,8 +10,9 @@ const Post = ({ posts, likePost, dislikePost }) => {
     const params = useParams();
     const postId = params.id;
     let currPost = posts.filter((item) => item.id === parseInt(postId))
-    currPost = currPost[0];
+    console.log(currPost)
 
+    currPost = currPost[0];
 
     return ( 
         <div className='post'>

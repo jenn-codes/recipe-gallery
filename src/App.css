@@ -10,8 +10,13 @@
   align-items: right;
   gap: 10px;
   margin: auto;
+  width: 70%;
 }
 
+body{
+  background-color: lightgray;
+
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -82,5 +87,10 @@
 }
 
 .card {
+  margin-bottom: 5px;
+}
+
+.header {
+  width: 100vw;
   margin-bottom: 5px;
 }
