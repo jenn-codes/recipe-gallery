@@ -68,7 +68,7 @@ const Search = styled('div')(({ theme }) => ({
   }));
 
   return (
-    <AppBar position="static" style={{backgroundColor: 'white'}} >
+    <AppBar className="header" position="static" style={{backgroundColor: 'white'}} >
       <Container maxWidth="xl">
         <Toolbar disableGutters style={{width: "100%", justifyContent: "space-between"}}>
 

@@ -8,7 +8,7 @@ import Header from './components/Header';
 import Board from './components/Board';
 import { db } from './firebase';
 import { doc, updateDoc } from "firebase/firestore";
-
+import Sidebar from './components/Sidebar';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -77,7 +77,10 @@ function App() {
           <Route exact path="/new" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/trending" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
         </Routes>
+        <Sidebar />
+
       </BrowserRouter>      
+
     </div>
   )
 }

@@ -4,6 +4,11 @@
   
   padding-bottom: 100px;
   min-height: 100vh;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  justify-items: right;
+  align-items: right;
+  gap: 10px;
 }
 
 .App-logo {
@@ -41,4 +46,23 @@
   }
 }
 
+.sidebar {
+  grid-column: 2;
+  width: 150px;
+  justify-self: left;
+}
+
+.header {
+  grid-column: 1 / span 2;
+}
+.filters, .home, .board, .post {
+  grid-column: 1;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.filters {
+  margin-bottom: 10px;
+}
 

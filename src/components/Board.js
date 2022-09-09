@@ -29,7 +29,7 @@ const Board = ({ posts, likePost, dislikePost }) => {
 
 
     return ( 
-        <div>
+        <div className='board'>
 
             <Box 
                 sx={{

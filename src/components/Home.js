@@ -8,10 +8,6 @@ const Home = ({posts, likePost, dislikePost}) => {
     const [sortedPosts, setSortedPosts] = useState([]);
     const [filter, setFilter] = useState('');
 
-
-
-
-
     useEffect(() => {
         setSortedPosts(posts)
         const trendingPosts = [...posts].sort((a,b) => (b.comments.length - a.comments.length));
@@ -31,13 +27,9 @@ const Home = ({posts, likePost, dislikePost}) => {
         })   
     }, [posts, filter])
 
-    console.log(sortedPosts)
-    
+   
     return ( 
-        <div>
-            <Typography variant="h5" sx={{color: 'gray', borderRadius: 2}}>
-                {filter} Posts
-            </Typography>
+        <div className='home'>
 
             <Filters />
             {sortedPosts.length !== 0 ?

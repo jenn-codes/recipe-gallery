@@ -33,7 +33,6 @@ const Comments = ({ comments, postId }) => {
 
     const submitForm = async () => {
         const ref = await db.collection('posts').where('id', '==', postId).get();
-        console.log(ref)
         const docRefId = ref.docs[0].id;
         const post = doc(db, "posts", docRefId);
         

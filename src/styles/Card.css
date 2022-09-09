@@ -1,21 +1,14 @@
 .card {
     width: 600px;
     margin: auto;
-    margin-top: 20px;
-}
-
-.comments {
+  }
+  
+  .comments {
     width: 600px;
     margin: auto;
-}
-
-/* .card img {
-    float: right;
-    width: 200px;
-    height: auto
-    ;
-} */
-
-h4 {
+  }
+  
+  
+  h4 {
     text-decoration: none;
-}
+  }

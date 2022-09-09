@@ -11,11 +11,10 @@ const Post = ({ posts, likePost, dislikePost }) => {
     const postId = params.id;
     let currPost = posts.filter((item) => item.id === parseInt(postId))
     currPost = currPost[0];
-    console.log(currPost)
 
 
     return ( 
-        <div>
+        <div className='post'>
            <PostCard 
                     board={currPost.board}
                     likes={currPost.likes}

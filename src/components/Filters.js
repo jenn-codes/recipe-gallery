@@ -10,7 +10,7 @@ const Filters = () => {
 
     
     return (
-        <div>
+        <div className="filters">
         
             <Box 
                 sx={{
