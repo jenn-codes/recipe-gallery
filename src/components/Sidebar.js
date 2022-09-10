@@ -6,12 +6,12 @@ import uniqid from 'uniqid';
 import Button from '@mui/material/Button';
 import Avatar from '@mui/material/Avatar';
 import '../App.css';
-import Mains from "../assets/mains.jpg";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 
 
 const Sidebar = ({posts}) => {
-
 
     let totalComments = 0;
     posts.forEach(post => {
@@ -24,7 +24,6 @@ const Sidebar = ({posts}) => {
             boards.push(post.board);
         }
     })
-
     
     let users = [];
     posts.forEach(post => {
@@ -34,10 +33,13 @@ const Sidebar = ({posts}) => {
     })
 
 
-
-
     return (
         <div className="sidebar">
+
+            
+          <Link to={'/add'} style={{ textDecoration: 'none' }}>
+          <Button variant="outlined">Add Post</Button>
+          </Link>
             
             <Box 
                 sx={{
@@ -49,18 +51,18 @@ const Sidebar = ({posts}) => {
                 }}
             >
                 
-                <Typography variant="h4" sx={{color: 'gray', borderRadius: 2, textAlign: 'left'}} >
-                    Top Food Boards:
+                <Typography variant="h4" sx={{color: 'gray', textAlign: 'center'}} >
+                    Top Food Boards
                 </Typography>
-                <Typography variant="p" sx={{color: 'gray', borderRadius: 2, textAlign: 'left'}} >
+                <Typography variant="p" sx={{color: 'gray', textAlign: 'left'}} >
                     {boards.map(board => {
                         return (
                             <div key={uniqid()} className='boards-list'>
 
                                 <Link to={`/board/${board}`} style={{ textDecoration: 'none', color: 'gray'}}>
                                     <div  style={{display: 'flex', alignItems:'center'}}>
-                                    <Avatar sx={{bgcolor: 'darkorange', marginRight: 1}}>{board[0]}</Avatar>
-                                    {boards.indexOf(board) + 1}: r/{board}
+                                        <Avatar sx={{bgcolor: 'darkorange', marginRight: 1}}>{board[0]}</Avatar>
+                                        {boards.indexOf(board) + 1}: r/{board}
                                     </div>
                                 </Link>
 
@@ -74,9 +76,6 @@ const Sidebar = ({posts}) => {
                 </Typography>   
 
             </Box>
-
-
-
             
             <Box 
                 sx={{
@@ -89,8 +88,8 @@ const Sidebar = ({posts}) => {
                 }}
             >
                 
-                <Typography variant="h4" sx={{color: 'gray', borderRadius: 2}} >
-                    About Community:
+                <Typography variant="h4" sx={{color: 'gray'}} >
+                    About Community
                 </Typography>
 
                 <Typography variant="p" sx={{color: 'gray', borderRadius: 2, textAlign: 'left'}} >
@@ -110,6 +109,41 @@ const Sidebar = ({posts}) => {
                 </Typography>
 
             </Box>
+
+            <Box 
+                sx={{
+                    backgroundColor: 'white',
+                    borderRadius: 2,
+                    gap: 3,
+                    width: 0.9,
+                    padding: 2,
+                    marginTop: 3
+                }}
+            >
+                
+                <Typography variant="h4" sx={{color: 'gray'}} >
+                    Community Rules
+                </Typography>
+
+                <Typography variant="p" sx={{color: 'gray'}} >
+                <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                    <ListItem>                  
+                    Questions should be clear and direct.
+                    </ListItem>
+                    <ListItem>                  
+                    No personal requests allowed.
+                    </ListItem>
+                    <ListItem>                  
+                    No personal info.
+                    </ListItem>
+                    <ListItem>                  
+                    Be respectful to other users.  
+                    </ListItem>
+                    </List>
+                </Typography>
+
+            </Box>
+
         </div>
 
     )

@@ -13,6 +13,8 @@ import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 
+
+
 const settings = ['Profile', 'Logout'];
 
 const Header = () => {
@@ -66,6 +68,9 @@ const Search = styled('div')(({ theme }) => ({
       },
     },
   }));
+  
+
+  
 
   return (
     <AppBar className="header" position="static" style={{backgroundColor: 'white'}} >
@@ -100,6 +105,8 @@ const Search = styled('div')(({ theme }) => ({
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+
+
 
           <Box sx={{ flexGrow: 0, justifySelf: "flex-end" }}>
             <Tooltip title="Open settings">

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PostCard from './Card';
 import Filters from './Filters';
-import Typography from '@mui/material/Typography';
 
 const Home = ({posts, likePost, dislikePost}) => {
 
