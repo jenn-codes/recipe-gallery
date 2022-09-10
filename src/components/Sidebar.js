@@ -8,6 +8,8 @@ import Avatar from '@mui/material/Avatar';
 import '../App.css';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import NavigationIcon from '@mui/icons-material/Navigation';
+import Fab from '@mui/material/Fab';
 
 
 
@@ -38,7 +40,10 @@ const Sidebar = ({posts}) => {
 
             
           <Link to={'/add'} style={{ textDecoration: 'none' }}>
-          <Button variant="outlined">Add Post</Button>
+            <Fab variant="extended" sx={{backgroundColor: 'darkorange', marginBottom: 3}}>
+                <NavigationIcon sx={{ mr: 1 }} />
+                Add Post
+            </Fab>
           </Link>
             
             <Box 

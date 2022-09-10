@@ -87,7 +87,6 @@ const Comments = ({ comments, postId }) => {
             <div>
                 {showForm ?
                 <div>
-                    <Typography variant="p" align="center" component="div">Add a comment</Typography>
                     <Box
                         component="form"
                         sx={{
@@ -99,6 +98,8 @@ const Comments = ({ comments, postId }) => {
                         noValidate
                         autoComplete="off"
                     >
+                        <Typography variant="h6" align="center" >Add a comment</Typography>
+
                         <TextField
                             id="outlined-name"
                             label="Name"

@@ -77,7 +77,7 @@ function App() {
           <Route exact path="/hot" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/new" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/trending" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
-          <Route exact path="/add" element={< AddPost />} /> 
+          <Route exact path="/add" element={< AddPost posts={posts}/>} /> 
 
         </Routes>
         <Sidebar posts={posts}/>
