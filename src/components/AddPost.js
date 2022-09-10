@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -9,6 +9,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import '../App.css'
+import uniqid from 'uniqid'
 
 const AddPost = ({posts}) => {
 
@@ -18,6 +19,37 @@ const AddPost = ({posts}) => {
             boards.push(post.board);
         }
     })
+
+    const [title, setTitle] = useState('')
+    const [board, setBoard] = useState('')
+    const [body, setBody] = useState('')
+    const [url, setUrl] = useState('')
+    const [image, setImage] = useState('')
+
+    const handleTitle = (e) => {
+        setTitle(e.target.value);
+    }
+
+    const handleBoard = (e) => {
+        setBoard(e.target.value);
+    }
+
+    const handleBody = (e) => {
+        setBody(e.target.value);
+    }
+
+    const handleUrl = (e) => {
+        setUrl(e.target.value);
+    }
+
+    const handleImage = (e) => {
+        setImage(e.target.value);
+    }
+
+    const submitPost = () => {
+        console.log(title,body,board,image,url)
+
+        }
 
     return (
         <div>
@@ -31,32 +63,30 @@ const AddPost = ({posts}) => {
                     '& > :not(style)': { m: 1, width: '25ch' },
                 }}
                 noValidate
-                fullWidth
                 autoComplete="off"
                 >
-                <Typography variant="h4" fullWidth sx={{color: 'gray', textAlign: 'center', margin: 'auto'}} >
+                <Typography variant="h4" sx={{color: 'gray', textAlign: 'center', margin: 'auto'}} >
                     Submit a Post
                 </Typography>
                 
-                <TextField id="title" label="Enter a title for your post" variant="standard" style = {{width: '80%'}}/>
+                <TextField id="title" label="Enter a title for your post" onChange={handleTitle} variant="standard" style = {{width: '80%'}}/>
                 
-                <FormControl size="small"  style = {{width: '80%'}} >
-                        <InputLabel id="board">Choose a board</InputLabel>
+                <FormControl size="small"  style = {{width: '80%'}}     >
+                        <InputLabel >Choose a board</InputLabel>
                         <Select
+                        onChange={handleBoard} 
                         labelId="board-selection"
                         id="board-selection"
-                        // value={age}
                         label="Board"
-                        // onChange={handleChange}
+                        value={board}
                         >
 
-                            {boards.map(board => {
+                            {boards.map(item => {
                                 return (
-                                    <div>
-                                        <MenuItem value={board}>{board}</MenuItem>
-
-
-                                    </div>
+                                    <MenuItem key={uniqid()} value={item} label={item}>
+                                        {item}
+                                    </MenuItem>
+                                    
                                 )
                             })}
                         </Select>
@@ -68,12 +98,13 @@ const AddPost = ({posts}) => {
                 style = {{width: '80%'}}
                 multiline
                 rows={6}
+                onChange={handleBody}
                 />
-                <TextField id="standard-basic" label="Enter the URL for the image" variant="standard" style = {{width: '80%'}}/>
-                <TextField id="standard-basic" label="Enter the URL for the post" variant="standard" style = {{width: '80%'}} />
+                <TextField id="standard-basic" label="Enter the URL for the image" onChange={handleUrl} variant="standard" style = {{width: '80%'}}/>
+                <TextField id="standard-basic" label="Enter the URL for the post" onChange={handleImage} variant="standard" style = {{width: '80%'}} />
 
 
-                <Button size="small" variant="contained" sx={{backgroundColor: 'darkorange'}}>Submit</Button>
+                <Button size="small" variant="contained" sx={{backgroundColor: 'darkorange'}} onClick={submitPost}>Submit</Button>
 
 
 
