@@ -3,13 +3,15 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import '../App.css'
 import uniqid from 'uniqid'
+import { collection, addDoc } from "firebase/firestore"; 
+import { db } from '../firebase';
+
 
 const AddPost = ({posts}) => {
 
@@ -46,10 +48,24 @@ const AddPost = ({posts}) => {
         setImage(e.target.value);
     }
 
-    const submitPost = () => {
-        console.log(title,body,board,image,url)
-
-        }
+    const submitPost = async () => {
+        const id = uniqid();
+        const currentDate = new Date();
+        const timestamp = currentDate.getTime();
+        const docRef = await addDoc(collection(db, "posts"), {
+            'title': title,
+            'board': board,
+            'body': body,
+            comments: [],
+            url: url,
+            image: image,
+            likes: 0,
+            user: 'jenntest',
+            id: id,
+            time: timestamp
+        });
+        console.log("Document written with ID: ", docRef.id);
+    }
 
     return (
         <div>
@@ -79,6 +95,7 @@ const AddPost = ({posts}) => {
                         id="board-selection"
                         label="Board"
                         value={board}
+                        style={{textAlign: 'left'}}
                         >
 
                             {boards.map(item => {

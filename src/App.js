@@ -39,6 +39,7 @@ function App() {
 
       const ref = await db.collection('posts').where('id', '==', id).get();
       const docRefId = ref.docs[0].id;
+      console.log(docRefId)
       const post = doc(db, "posts", docRefId);
       await updateDoc(post, {
         likes: newArr[postIndex].likes

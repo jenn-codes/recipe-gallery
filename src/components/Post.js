@@ -24,10 +24,10 @@ const Post = ({ posts, likePost, dislikePost }) => {
                     image={currPost.image}
                     title={currPost.title}
                     user={currPost.user}
+                    id={currPost.id}
                     likePost={likePost}
                     dislikePost={dislikePost}
                     comments={currPost.comments.length}
-                    id={currPost.id}
                     url={currPost.url}
             />
             <Comments 

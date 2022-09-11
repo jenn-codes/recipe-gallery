@@ -6,6 +6,7 @@ import Desserts from "../assets/desserts.jpg";
 import Mains from "../assets/mains.jpg";
 import Drinks from "../assets/drinks.jpg";
 import Box from '@mui/material/Box';
+import uniqid from 'uniqid'
 
 
 
@@ -55,7 +56,7 @@ const Board = ({ posts, likePost, dislikePost }) => {
             {filteredPosts.length !== 0 ?
             filteredPosts.map(item => {
                 return (
-                    <PostCard key={item.id}
+                    <PostCard key={uniqid()}
                     board={item.board}
                     likes={item.likes}
                     comments={item.comments.length}
@@ -63,8 +64,8 @@ const Board = ({ posts, likePost, dislikePost }) => {
                     body={item.body}
                     image={item.image}
                     title={item.title}
+                    id={item.id}
                     user={item.user}
-                    id={item.id}                            
                     likePost={likePost}
                     dislikePost={dislikePost}
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PostCard from './Card';
 import Filters from './Filters';
+import uniqid from 'uniqid'
+
 
 const Home = ({posts, likePost, dislikePost}) => {
 
@@ -34,7 +36,7 @@ const Home = ({posts, likePost, dislikePost}) => {
             {sortedPosts.length !== 0 ?
             sortedPosts.map(item => {
                 return (
-                    <PostCard key={item.id}
+                    <PostCard key={uniqid()}
                     board={item.board}
                     likes={item.likes}
                     comments={item.comments.length}
@@ -43,7 +45,7 @@ const Home = ({posts, likePost, dislikePost}) => {
                     image={item.image}
                     title={item.title}
                     user={item.user}
-                    id={item.id}                            
+                    id={item.id}
                     likePost={likePost}
                     dislikePost={dislikePost}
                     />
