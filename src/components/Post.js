@@ -8,8 +8,9 @@ import Comments from './Comments';
 const Post = ({ posts, likePost, dislikePost }) => {
     
     const params = useParams();
-    const postId = params.id;
-    let currPost = posts.filter((item) => item.id === parseInt(postId))
+    const postId = params.id
+    console.log(postId)
+    let currPost = posts.filter((item) => item.id.toString() === (postId))
     console.log(currPost)
 
     currPost = currPost[0];

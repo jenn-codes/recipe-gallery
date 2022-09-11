@@ -51,7 +51,6 @@ const AddPost = ({posts}) => {
     const submitPost = async () => {
         const id = uniqid();
         const currentDate = new Date();
-        const timestamp = currentDate.getTime();
         const docRef = await addDoc(collection(db, "posts"), {
             'title': title,
             'board': board,
@@ -62,7 +61,7 @@ const AddPost = ({posts}) => {
             likes: 0,
             user: 'jenntest',
             id: id,
-            time: timestamp
+            time: currentDate
         });
         console.log("Document written with ID: ", docRef.id);
     }
