@@ -78,7 +78,9 @@ const PostCard = ({ board,
                             {body}
                         </Typography>
                         <Typography variant="caption" align="left" component="div">
-                            <Link to="{url}">{url}</Link>
+                            <a href={url}>
+                                {url}
+                            </a>
                         </Typography>
                         <CardActions>
                             

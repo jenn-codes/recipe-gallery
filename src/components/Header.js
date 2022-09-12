@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import Button from '@mui/material/Button';
 
 
 
@@ -69,9 +70,8 @@ const Header = () => {
     },
   }));
 
-  const handleSearch = (e) => {
+  const handleSearch = () => {
     console.log('search');
-    console.log(e.target.value)
   }
 
   const allSettings = settings.map((setting) => (
@@ -109,7 +109,9 @@ const Header = () => {
 
           <Search style={{backgroundColor: "lightgray"}} >
             <SearchIconWrapper>
+              <Button align="left" size="small" onClick={handleSearch}>
                 <SearchIcon sx={{zIndex: 100}} onClick={(e) => handleSearch(e)} />
+              </Button>
              
             </SearchIconWrapper>
             <StyledInputBase 

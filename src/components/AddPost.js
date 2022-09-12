@@ -11,7 +11,7 @@ import '../App.css'
 import uniqid from 'uniqid'
 import { collection, addDoc } from "firebase/firestore"; 
 import { db } from '../firebase';
-
+import { useNavigate } from "react-router-dom";
 
 const AddPost = ({posts}) => {
 
@@ -48,7 +48,10 @@ const AddPost = ({posts}) => {
         setImage(e.target.value);
     }
 
+    let navigate = useNavigate()
+
     const submitPost = async () => {
+        
         const id = uniqid();
         const currentDate = new Date();
         const docRef = await addDoc(collection(db, "posts"), {
@@ -64,6 +67,7 @@ const AddPost = ({posts}) => {
             time: currentDate
         });
         console.log("Document written with ID: ", docRef.id);
+        navigate('../new')
     }
 
     const allBoards = boards.map(item => {
@@ -118,8 +122,8 @@ const AddPost = ({posts}) => {
                 rows={6}
                 onChange={handleBody}
                 />
-                <TextField id="standard-basic" label="Enter the URL for the image" onChange={handleUrl} variant="standard" style = {{width: '80%'}}/>
-                <TextField id="standard-basic" label="Enter the URL for the post" onChange={handleImage} variant="standard" style = {{width: '80%'}} />
+                <TextField id="standard-basic" label="Enter the URL for the image" onChange={handleImage} variant="standard" style = {{width: '80%'}}/>
+                <TextField id="standard-basic" label="Enter the URL for the post" onChange={handleUrl} variant="standard" style = {{width: '80%'}} />
 
 
                 <Button size="small" variant="contained" sx={{backgroundColor: 'darkorange'}} onClick={submitPost}>Submit</Button>
