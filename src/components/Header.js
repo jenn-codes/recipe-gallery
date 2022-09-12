@@ -27,7 +27,7 @@ const Header = () => {
   };
 
   
-const Search = styled('div')(({ theme }) => ({
+  const Search = styled('div')(({ theme }) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -68,6 +68,17 @@ const Search = styled('div')(({ theme }) => ({
       },
     },
   }));
+
+  const handleSearch = (e) => {
+    console.log('search');
+    console.log(e.target.value)
+  }
+
+  const allSettings = settings.map((setting) => (
+    <MenuItem key={setting} onClick={handleCloseUserMenu}>
+      <Typography textAlign="center">{setting}</Typography>
+    </MenuItem>
+  ))
   
 
   
@@ -96,11 +107,12 @@ const Search = styled('div')(({ theme }) => ({
             RECIPE REDDIT
           </Typography>
 
-          <Search style={{backgroundColor: "lightgray"}}>
+          <Search style={{backgroundColor: "lightgray"}} >
             <SearchIconWrapper>
-              <SearchIcon />
+                <SearchIcon sx={{zIndex: 100}} onClick={(e) => handleSearch(e)} />
+             
             </SearchIconWrapper>
-            <StyledInputBase
+            <StyledInputBase 
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
             />
@@ -130,11 +142,7 @@ const Search = styled('div')(({ theme }) => ({
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {allSettings}
             </Menu>
           </Box>
         </Toolbar>

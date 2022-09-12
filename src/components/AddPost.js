@@ -66,6 +66,15 @@ const AddPost = ({posts}) => {
         console.log("Document written with ID: ", docRef.id);
     }
 
+    const allBoards = boards.map(item => {
+        return (
+            <MenuItem key={uniqid()} value={item} label={item}>
+                {item}
+            </MenuItem>
+            
+        )
+    })
+
     return (
         <div>
 
@@ -96,15 +105,8 @@ const AddPost = ({posts}) => {
                         value={board}
                         style={{textAlign: 'left'}}
                         >
+                            {allBoards}
 
-                            {boards.map(item => {
-                                return (
-                                    <MenuItem key={uniqid()} value={item} label={item}>
-                                        {item}
-                                    </MenuItem>
-                                    
-                                )
-                            })}
                         </Select>
                     </FormControl>
 
