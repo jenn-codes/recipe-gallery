@@ -51,22 +51,21 @@ const AddPost = ({posts}) => {
     let navigate = useNavigate()
 
     const submitPost = async () => {
-        
-        const id = uniqid();
+        const id = new Date().valueOf();
         const currentDate = new Date();
         const docRef = await addDoc(collection(db, "posts"), {
             'title': title,
             'board': board,
             'body': body,
-            comments: [],
-            url: url,
-            image: image,
-            likes: 0,
-            user: 'jenntest',
-            id: id,
-            time: currentDate
+            'comments': [],
+            'url': url,
+            'image': image,
+            'likes': 0,
+            'user': 'jenntest',
+            'id': id,         
+            'time': currentDate
         });
-        console.log("Document written with ID: ", docRef.id);
+        console.log("Document written with ID: ", docRef.id, "id: ", id);
         navigate('../new')
     }
 
@@ -74,8 +73,7 @@ const AddPost = ({posts}) => {
         return (
             <MenuItem key={uniqid()} value={item} label={item}>
                 {item}
-            </MenuItem>
-            
+            </MenuItem>      
         )
     })
 

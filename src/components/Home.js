@@ -6,11 +6,12 @@ import uniqid from 'uniqid'
 
 const Home = ({posts, likePost, dislikePost}) => {
 
-    const [sortedPosts, setSortedPosts] = useState([]);
+
+    const [sortedPosts, setSortedPosts] = useState(posts);
     const [filter, setFilter] = useState('');
 
+
     useEffect(() => {
-        setSortedPosts(posts)
         const trendingPosts = [...posts].sort((a,b) => (b.comments.length - a.comments.length));
         const newPosts = [...posts].sort((a,b) => (b.time.seconds - a.time.seconds));  
         const hotPosts = [...posts].sort((a,b) => (b.likes - a.likes));
@@ -26,7 +27,7 @@ const Home = ({posts, likePost, dislikePost}) => {
             setFilter('Hot');
             setSortedPosts(hotPosts);
         })   
-    }, [posts, filter])
+    }, [filter, posts])
 
    
     return ( 

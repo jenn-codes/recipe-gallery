@@ -9,9 +9,7 @@ const Post = ({ posts, likePost, dislikePost }) => {
     
     const params = useParams();
     const postId = params.id
-    console.log(postId)
     let currPost = posts.filter((item) => item.id.toString() === (postId))
-    console.log(currPost)
 
     currPost = currPost[0];
 

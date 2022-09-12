@@ -29,20 +29,19 @@ function App() {
   }, [])
 
 
+
   const likePost = async (id) => {
     let postIndex = posts.findIndex((item) => item.id === id)
     if (postIndex !== -1) {
       const newArr = posts.slice();
-      // let newLikes = newArr[postIndex].likes + 1;
+      let newLikes = newArr[postIndex].likes + 1;
       newArr[postIndex].likes++
       setPosts(newArr);
-
       const ref = await db.collection('posts').where('id', '==', id).get();
       const docRefId = ref.docs[0].id;
-      console.log(docRefId)
       const post = doc(db, "posts", docRefId);
       await updateDoc(post, {
-        likes: newArr[postIndex].likes
+        likes: newLikes
       })
   }}
 
@@ -54,7 +53,6 @@ function App() {
       let newLikes = newArr[postIndex].likes - 1;
       newArr[postIndex].likes--
       setPosts(newArr);
-
       const ref = await db.collection('posts').where('id', '==', id).get();
       const docRefId = ref.docs[0].id;
       const post = doc(db, "posts", docRefId);
