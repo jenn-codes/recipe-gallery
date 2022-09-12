@@ -21,6 +21,6 @@
     "linebreak-style": "off",
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
-    "react/prop-types": "warn"
+    "react/prop-types": "off"
   }
 }
