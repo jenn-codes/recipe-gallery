@@ -26,7 +26,10 @@ const Home = ({posts, likePost, dislikePost}) => {
         document.querySelector('.sortHot').addEventListener('click', () => {
             setFilter('Hot');
             setSortedPosts(hotPosts);
-        })   
+        }) 
+        if (filter === '') {
+            setSortedPosts(posts);
+        }
     }, [filter, posts])
 
    

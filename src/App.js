@@ -10,6 +10,7 @@ import { db } from './firebase';
 import { doc, updateDoc } from "firebase/firestore";
 import Sidebar from './components/Sidebar';
 import AddPost from './components/AddPost';
+import Search from './components/Search';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -64,10 +65,14 @@ function App() {
 
   return (
     <div>
-      <Header />
-      <div className="App">
+
+
+
 
       <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Header />
+        <div className="App">
+
         <Routes>
           <Route path="/post/:id" element={<Post posts={posts}  likePost={likePost} dislikePost={dislikePost} />} />
           <Route path="/user/:id" element={<User />} />
@@ -77,12 +82,12 @@ function App() {
           <Route exact path="/new" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/trending" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/add" element={< AddPost posts={posts}/>} /> 
-
+          <Route path="/search/:id" element={<Search posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
         </Routes>
         <Sidebar posts={posts}/>
+        </div>
 
       </BrowserRouter>      
-      </div>
     </div>
   )
 }
