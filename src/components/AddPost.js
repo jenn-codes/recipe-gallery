@@ -13,7 +13,8 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from '../firebase';
 import { useNavigate } from "react-router-dom";
 
-const AddPost = ({posts}) => {
+
+const AddPost = ({posts, refresh}) => {
 
     let boards = [];
     posts.forEach(post => {
@@ -66,7 +67,8 @@ const AddPost = ({posts}) => {
             'time': currentDate
         });
         console.log("Document written with ID: ", docRef.id, "id: ", id);
-        navigate('../new')
+        refresh();
+        navigate('../');
     }
 
     const allBoards = boards.map(item => {

@@ -14,6 +14,8 @@ import Search from './components/Search';
 
 function App() {
   const [posts, setPosts] = useState([]);
+  const [fetchData, setFetchData] = useState(null)
+
 
   useEffect(() => {
     let newArr = [];
@@ -27,7 +29,11 @@ function App() {
       }
     getData();
 
-  }, [])
+  }, [fetchData])
+
+  const refresh = () => {
+    setFetchData(!fetchData)
+  }
 
 
 
@@ -81,7 +87,7 @@ function App() {
           <Route exact path="/hot" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/new" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/trending" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
-          <Route exact path="/add" element={< AddPost posts={posts}/>} /> 
+          <Route exact path="/add" element={< AddPost posts={posts} refresh={refresh} />} /> 
           <Route path="/search/:id" element={<Search posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
         </Routes>
         <Sidebar posts={posts}/>

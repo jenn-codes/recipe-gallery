@@ -37,7 +37,6 @@ const Search = ({posts, likePost, dislikePost}) => {
         <div>
             <span>Search Results for: "{searchTerm}"</span>
             {searchResults}
-
         </div>
     )
 }
