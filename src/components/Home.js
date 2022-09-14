@@ -54,9 +54,9 @@ const Home = ({posts, likePost, dislikePost}) => {
                     dislikePost={dislikePost}
                     />
                 )
-            }) :
-            <div>There are no posts.</div>
-            }
+                }) :
+                <div>There are no posts.</div>
+                }
         </div>
     )
 }
