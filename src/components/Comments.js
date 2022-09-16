@@ -7,7 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { db } from '../firebase';
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button'
@@ -15,10 +15,7 @@ import Typography from '@mui/material/Typography';
 import ArrowCircleUpOutlinedIcon from '@mui/icons-material/ArrowCircleUpOutlined';
 import ArrowCircleDownOutlinedIcon from '@mui/icons-material/ArrowCircleDownOutlined';
 
-
-
 const Comments = ({ comments, postId }) => {
-
     
     const [name, setName] = useState('');
     const [comment, setComment] = useState('');
@@ -35,65 +32,78 @@ const Comments = ({ comments, postId }) => {
         setComment(e.target.value)
     }
 
-    const submitForm = async () => {
-        const ref = await db.collection('posts').where('id', '==', postId).get();
-        const docRefId = ref.docs[0].id;
-        const post = doc(db, "posts", docRefId);
-        await updateDoc(post, {
-            comments: arrayUnion(
-                {
-                    'user': name,
-                    'comment': comment,
-                    'likes': 0
-                }
-            )});
-        setPostComments([
-            ...postComments,
-            {
-                'user': name,
-                'comment': comment,
-                'likes': 0
-            }])
+    const submitForm = () => {
         setShowForm(false);
+        let newComments = postComments.slice();
+        newComments.push({
+            'user': name,
+            'comment': comment,
+            'likes': 0
+        })
+        setPostComments(newComments);
+        updateDB(newComments);
     }
 
-    const likeComment = async (item) => {
-
-        const commentIndex = postComments.indexOf(item)
-        let newComments = postComments.slice();
-        newComments[commentIndex].likes += 1;
-        setPostComments(newComments);
-            
+    const updateDB = async (newComments) => {
         const ref = await db.collection('posts').where('id', '==', postId).get();
         const docRefId = ref.docs[0].id;
         const post = doc(db, "posts", docRefId);
         await updateDoc(post, {
             comments: newComments,
-        })
+        }) 
     }
+
+    // calculate parent & child indices of nested comments
+    const findCommentIndexes = (item) => {
+        let parentIndex, childIndex
+        let parentComments = postComments.filter(el => 'children' in el)
+            parentComments.forEach(element => {
+                (element.children.forEach(i => {
+                    if (i.comment.includes(item.comment)) {
+                        const parentComment = element
+                        parentIndex = parentComments.indexOf(parentComment);
+                        childIndex = parentComment.children.indexOf(i);
+    }}))})
+    return [parentIndex, childIndex]
+    }
+
+    const likeComment = async (item) => {
+        const commentIndex = postComments.indexOf(item) 
+        // check for nested comment
+        if (commentIndex === -1) {
+            const [parentIndex, childIndex] = findCommentIndexes(item)
+            let newComments = postComments.slice()
+            newComments[parentIndex]['children'][childIndex].likes += 1
+            setPostComments(newComments);
+            updateDB(newComments)
+        } else {
+            let newComments = postComments.slice()
+            newComments[commentIndex].likes += 1;
+            setPostComments(newComments);
+            updateDB(newComments)
+    }}
 
     
     const dislikeComment = async (item) => {
         const commentIndex = postComments.indexOf(item)
-        console.log(commentIndex)
-        let newComments = postComments.slice();
-        newComments[commentIndex].likes -= 1;
-        setPostComments(newComments);
-            
-        const ref = await db.collection('posts').where('id', '==', postId).get();
-        const docRefId = ref.docs[0].id;
-        const post = doc(db, "posts", docRefId);
-        await updateDoc(post, {
-            comments: newComments,
-        })
-    }
+        // check for nested comment
+        if (commentIndex === -1) {
+            const [parentIndex, childIndex] = findCommentIndexes(item)
+            let newComments = postComments.slice()
+            newComments[parentIndex]['children'][childIndex].likes -= 1
+            setPostComments(newComments);
+            updateDB(newComments)
+        } else {
+            let newComments = postComments.slice();
+            newComments[commentIndex].likes -= 1;
+            setPostComments(newComments);
+            updateDB(newComments)
+    }}
 
     const reply = async (item) => {
         setReplyComment(item);
-        console.log(replyComment);
         setShowForm(true);
         setReplyStatus(true);        
-
     }
 
     const submitReply = async () => {
@@ -105,83 +115,49 @@ const Comments = ({ comments, postId }) => {
             'likes': 0
         }]
         setPostComments(newComments);
-            
-        const ref = await db.collection('posts').where('id', '==', postId).get();
-        const docRefId = ref.docs[0].id;
-        const post = doc(db, "posts", docRefId);
-        await updateDoc(post, {
-            comments: newComments,
-        })
+        updateDB(newComments);
+        setShowForm(false);
+
     }
-
-
 
     const share = (item) => {
         console.log(item)
     }
-    
 
-    return (
-        <div className="comments">
-            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                {postComments.map(item => {
+    const displayComment = (item) => {
+        return (
+            <div>
+            <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                    <Avatar sx={{bgcolor: 'darkorange'}}>{item.user[0]}</Avatar>
+                </ListItemAvatar>
 
-                    return (     
-                        <div key={uniqid()}>
-                            {console.log(item.children)}
-                            <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar sx={{bgcolor: 'darkorange'}}>{item.user[0]}</Avatar>
-                                </ListItemAvatar>
-
-                                <ListItemText
-                                primary={item.comment}
-                                secondary={
-                                    <React.Fragment>
-                                        {item.user}
-                                    </React.Fragment>
-                                }
-                                />
-                            
-                            </ListItem>
-                            {item.children !== undefined ?
-                            <ListItem sx={{paddingLeft: 10}}>
-                                
-                                <ListItemAvatar>
-                                    <Avatar sx={{bgcolor: 'darkorange'}}>{item.children[0].user[0]}</Avatar>
-                                </ListItemAvatar>
-
-                                <ListItemText
-                                primary={item.children[0].comment}
-                                secondary={
-                                    <React.Fragment>
-                                        {item.children[0].user}
-                                    </React.Fragment>
-                                }
-                                />                            
-                            </ListItem> :
-                            ' '}
-
-                            <ListItem alignItems="flex-start">
-                            <Button size="small" onClick={() => likeComment(item)} ><ArrowCircleUpOutlinedIcon /></Button>
-                            {item.likes ? 
-                            item.likes :
-                            0
-                            }
-                            <Button size="small" onClick={() => dislikeComment(item)}><ArrowCircleDownOutlinedIcon /></Button>
-                            <Button size="small" onClick={() => reply(item)}>REPLY</Button>
-                            <Button size="small" onClick={() => share(item)}>SHARE</Button>
-
-                            
-                            </ListItem>
-                            <Divider  />
-
-                        </div>         
-                    )
-                })
+                <ListItemText
+                primary={item.comment}
+                secondary={
+                    <React.Fragment>
+                        {item.user}
+                    </React.Fragment>
                 }
-            </List>
-                
+                />
+            </ListItem>
+            
+            <ListItem alignItems="flex-start">
+            <Button size="small" onClick={() => likeComment(item)} ><ArrowCircleUpOutlinedIcon /></Button>
+            {item.likes ? 
+            item.likes :
+            0
+            }
+            <Button size="small" onClick={() => dislikeComment(item)}><ArrowCircleDownOutlinedIcon /></Button>
+            <Button size="small" onClick={() => reply(item)}>REPLY</Button>
+            <Button size="small" onClick={() => share(item)}>SHARE</Button>
+            </ListItem>    
+            <Divider  />
+            </div>)
+        }
+
+    const displayForm = () => {
+        return (
             <div>
                 {showForm ?
                 <div>
@@ -222,12 +198,33 @@ const Comments = ({ comments, postId }) => {
                 </div>
                 : ' '
                 }
-
-
             </div>
+        )
+    }
 
-        </div>
+    return (
+        <div className="comments">
+            <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+                {postComments.map(item => {
+                    return (     
+                        <div key={uniqid()}>
+                            {displayComment(item)}
+                            {item.children !== undefined ?
+                            item.children.map(item => {
+                                return (     
+                                    <div key={uniqid()} style={{paddingLeft: 20}}>
+                                        {displayComment(item)}
+                                    </div>
+                                )
+                            }) : ' '
+                            }
+                        </div>
+                    )}
+                )}
+            </List>
+            {displayForm()}
 
+        </div> 
     )
 }
 
