@@ -85,7 +85,7 @@ function App() {
 
         <Routes>
           <Route path="/post/:id" element={<Post posts={posts}  likePost={likePost} dislikePost={dislikePost} />} />
-          <Route path="/user/:id" element={<User />} />
+          <Route path="/user/:id" element={<User posts={posts} likePost={likePost} dislikePost={dislikePost}/>} />
           <Route path="/board/:id" element={<Board posts={posts}  likePost={likePost} dislikePost={dislikePost} />} />
           <Route exact path="/" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/hot" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 

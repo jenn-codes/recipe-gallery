@@ -7,9 +7,10 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { Grid } from '@mui/material';
+import PostCard from "./Card";
+import uniqid from 'uniqid'
 
-
-const User = () => {
+const User = ({ posts, likePost, dislikePost }) => {
 
 
     const navigate = useNavigate();
@@ -23,8 +24,29 @@ const User = () => {
     const [newUrl, setNewUrl] = useState('');
     const [userLoggedIn, setUserLoggedIn] = useState(false);
 
-    console.log(uid)
-
+    console.log(uid);
+    
+    const filteredPosts = posts.filter(post => post.user.toLowerCase() === displayName.toLowerCase())
+     
+    const userPosts = filteredPosts.length !== 0 ?
+                        filteredPosts.map(item => {
+                            return (
+                                <PostCard key={uniqid()}
+                                board={item.board}
+                                likes={item.likes}
+                                comments={item.comments.length}
+                                time={item.time}
+                                body={item.body}
+                                image={item.image}
+                                title={item.title}
+                                id={item.id}
+                                user={item.user}
+                                likePost={likePost}
+                                dislikePost={dislikePost}
+                                />
+                            )
+                        }) : 
+                        <span>There are no posts found.</span>
 
     useEffect(() => {       
         onAuthStateChanged(auth, (user) => {
@@ -78,11 +100,16 @@ const User = () => {
                 
                 <Typography variant="p" align="center" style={{width: '80%'}}>User Email: {email}</Typography>
                 <Typography variant="p" align="center"  style={{width: '80%'}}>Display Name: {displayName}</Typography>
-                <Typography variant="p" align="left" >Posts Submitted by User:</Typography>
+                <Typography variant="h6" align="center" style={{borderTop: '1px solid black', width: '100%'}}>Posts Submitted by User:</Typography>
+
+                {userPosts}
 
             </Box>
 
+
             : <span>You are not logged in. Log in to continue.</span>}
+
+
 
 
 
