@@ -6,15 +6,19 @@ import Home from './components/Home';
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Board from './components/Board';
-import { db } from './firebase';
+import { db, auth } from './firebase';
 import { doc, updateDoc } from "firebase/firestore";
 import Sidebar from './components/Sidebar';
 import AddPost from './components/AddPost';
 import Search from './components/Search';
+import Register from './components/Register';
+import Login from './components/Login'
 
 function App() {
   const [posts, setPosts] = useState([]);
   const [fetchData, setFetchData] = useState(null)
+
+  console.log(auth)
 
 
   useEffect(() => {
@@ -89,6 +93,9 @@ function App() {
           <Route exact path="/trending" element={<Home posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
           <Route exact path="/add" element={< AddPost posts={posts} refresh={refresh} />} /> 
           <Route path="/search/:id" element={<Search posts={posts} likePost={likePost} dislikePost={dislikePost} />} /> 
+          <Route path="/register" element={< Register />} /> 
+          <Route path="/login" element={< Login />} /> 
+
         </Routes>
         <Sidebar posts={posts}/>
         </div>
