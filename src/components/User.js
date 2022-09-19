@@ -10,23 +10,39 @@ import { Grid } from '@mui/material';
 import PostCard from "./Card";
 import uniqid from 'uniqid'
 
+
 const User = ({ posts, likePost, dislikePost }) => {
 
 
     const navigate = useNavigate();
     const params = useParams();
     const paramId = params.id;
-    console.log(paramId);
+    console.log(paramId)
     const auth = getAuth();
     const [uid, setUid] = useState(null);
     const [email, setEmail] = useState(null);
     const [displayName, setDisplayName] = useState(null);
     const [newUrl, setNewUrl] = useState('');
     const [userLoggedIn, setUserLoggedIn] = useState(false);
+    const[filteredPosts, setFilteredPosts] = useState(posts)
 
-    console.log(uid);
+    useEffect(() => {       
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setEmail(user.email);
+                setUid(user.uid);
+                setDisplayName(user.displayName.toLowerCase());
+                setNewUrl(`/user/${uid}`); 
+                setUserLoggedIn(true);
+                const newArr = posts.filter(post => post.user.toLowerCase() === displayName);
+                setFilteredPosts(newArr)
+                navigate(newUrl)
+
+            } 
+        })   
+
+    }, [navigate, auth, newUrl, uid, posts, displayName])
     
-    const filteredPosts = posts.filter(post => post.user.toLowerCase() === displayName.toLowerCase())
      
     const userPosts = filteredPosts.length !== 0 ?
                         filteredPosts.map(item => {
@@ -48,20 +64,7 @@ const User = ({ posts, likePost, dislikePost }) => {
                         }) : 
                         <span>There are no posts found.</span>
 
-    useEffect(() => {       
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setEmail(user.email);
-                setUid(user.uid);
-                setDisplayName(user.displayName);
-                setNewUrl(`/user/${user.uid}`); 
-                setUserLoggedIn(true);
-                navigate(newUrl)
-                console.log(newUrl)
-            } 
-        })   
 
-    }, [auth, navigate, newUrl])
     
     const updateName = () => {
         updateProfile(auth.currentUser, {
@@ -105,14 +108,9 @@ const User = ({ posts, likePost, dislikePost }) => {
                 {userPosts}
 
             </Box>
-
-
-            : <span>You are not logged in. Log in to continue.</span>}
-
-
-
-
-
+            : 
+            <span>You are not logged in. Log in to continue.</span>
+            }
         </div>
     )   
 }
