@@ -13,18 +13,18 @@ import uniqid from 'uniqid'
 
 const User = ({ posts, likePost, dislikePost }) => {
 
-
     const navigate = useNavigate();
     const params = useParams();
     const paramId = params.id;
-    console.log(paramId)
+    console.log(paramId);
     const auth = getAuth();
     const [uid, setUid] = useState(null);
     const [email, setEmail] = useState(null);
     const [displayName, setDisplayName] = useState(null);
     const [newUrl, setNewUrl] = useState('');
     const [userLoggedIn, setUserLoggedIn] = useState(false);
-    const[filteredPosts, setFilteredPosts] = useState(posts)
+    const [filteredPosts, setFilteredPosts] = useState(posts);
+    const [newDisplayName, setNewDisplayName] = useState(null);
 
     useEffect(() => {       
         onAuthStateChanged(auth, (user) => {
@@ -68,8 +68,9 @@ const User = ({ posts, likePost, dislikePost }) => {
     
     const updateName = () => {
         updateProfile(auth.currentUser, {
-            displayName: displayName
+            displayName: newDisplayName
         })
+        console.log(newDisplayName)
         document.querySelector('#displayName').value = '';        
     }
 
@@ -94,7 +95,7 @@ const User = ({ posts, likePost, dislikePost }) => {
 
                 <Grid container spacing={2} style={{width: '80%', margin: 'auto'}}>
                     <Grid item xs={10} style={{padding: 0}}>
-                        <TextField id="displayName" label="Enter a display name." onChange={(e) => setDisplayName(e.target.value)} variant="standard" style = {{width: '90%', padding: 0}} />
+                        <TextField id="displayName" label="Enter a display name." onChange={(e) => setNewDisplayName(e.target.value)} variant="standard" style = {{width: '90%', padding: 0}} />
                     </Grid>
                     <Grid item xs={2} style={{padding: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}}>
                         <Button size="small" variant="outlined" sx={{backgroundColor: 'white', padding: 0, alignSelf: 'center', justifySelf: 'center'}} onClick={updateName}  style={{padding: 0,  verticalAlign: 'middle'}}>Update</Button>

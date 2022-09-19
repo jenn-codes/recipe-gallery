@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -13,11 +13,15 @@ import SearchIcon from '@mui/icons-material/Search';
 import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import { getAuth } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 const Header = () => {
   const [anchorElUser, setAnchorElUser] = useState(null);
+  const [displayName, setDisplayName] = useState(null);
+  const auth = getAuth();
+
+
 
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
@@ -27,7 +31,6 @@ const Header = () => {
   };
 
   const searchRef = useRef('');
-
   const navigate = useNavigate();
   const handleSearch = () => {
     console.log(searchRef.current.value);
@@ -40,11 +43,24 @@ const Header = () => {
     console.log('User signed out!');
   }
 
+  useEffect(() => {       
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+          (user.displayName.length !== 0) ?            
+          setDisplayName(user.displayName.toLowerCase()) :
+          setDisplayName(user.email)
+        }})
+  })
+  
+
+
+
+
   const allSettings = (
     <div>
       <Tooltip title="Open settings">
       <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }} style={{align: "right"}} >
-        <Avatar  alt="Jennifer" src="/static/images/avatar/2.jpg" />
+        <Avatar  alt={displayName} src="/static/images/avatar/2.jpg" />
       </IconButton>
       </Tooltip>
       <Menu
