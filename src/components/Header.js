@@ -49,8 +49,11 @@ const Header = () => {
         if (user) {
           user.displayName ?            
           setDisplayName(user.displayName.toLowerCase()) :
-          setDisplayName(user.email)
-
+          setDisplayName(user.email);
+          document.querySelector('button#register').disabled = true;
+          document.querySelector('button#register').style.opacity = 0.4;
+          document.querySelector('button#login').disabled = true;
+          document.querySelector('button#login').style.opacity = 0.4;          
         }})
   })
   
@@ -124,8 +127,8 @@ const Header = () => {
           </Box>
 
           <Box sx={{ flexGrow: 0, justifySelf: "flex-end", display: "flex", gap: 2}}>
-            <Button size="small" variant="contained" sx={{backgroundColor: 'white', color: 'darkorange'}} onClick={() => navigate('./login')}>Login</Button>
-            <Button size="small" variant="contained" sx={{backgroundColor: 'darkorange'}} onClick={() => navigate('./register')}>Register</Button>
+            <Button size="small" id="login" variant="contained" sx={{backgroundColor: 'white', color: 'darkorange'}} onClick={() => navigate('./login')}>Login</Button>
+            <Button size="small" id="register" variant="contained" sx={{backgroundColor: 'darkorange'}} onClick={() => navigate('./register')}>Register</Button>
             {allSettings}
           </Box>
 

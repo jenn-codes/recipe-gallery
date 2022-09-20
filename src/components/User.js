@@ -131,7 +131,7 @@ const User = ({ posts, likePost, dislikePost }) => {
                     <Button size="small" variant="outlined" sx={{backgroundColor: 'white', padding: 0, alignSelf: 'center', justifySelf: 'center'}} onClick={resetPassword}  style={{padding: 2,  verticalAlign: 'middle'}}>Reset Password</Button>
                 </Grid>
 
-                <Typography variant="p" align="center" style={{width: '100%', borderTop: '1px solid black', marginTop: '2rem'}}>Posts Submitted by User:</Typography>
+                <Typography variant="p" align="center" style={{width: '100%', borderTop: '1px solid black', marginTop: '2rem'}}>Posts You Submitted:</Typography>
 
                 {userPosts}
 
