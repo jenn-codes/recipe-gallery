@@ -41,14 +41,16 @@ const Header = () => {
     const auth = getAuth();
     auth.signOut();
     console.log('User signed out!');
+    navigate('/')
   }
 
   useEffect(() => {       
     onAuthStateChanged(auth, (user) => {
         if (user) {
-          (user.displayName.length !== 0) ?            
+          user.displayName ?            
           setDisplayName(user.displayName.toLowerCase()) :
           setDisplayName(user.email)
+
         }})
   })
   

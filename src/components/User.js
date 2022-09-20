@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getAuth, onAuthStateChanged, updateProfile } from "firebase/auth";
+import { getAuth, onAuthStateChanged, updateProfile, sendEmailVerification, sendPasswordResetEmail  } from "firebase/auth";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -31,7 +31,7 @@ const User = ({ posts, likePost, dislikePost }) => {
             if (user) {
                 setEmail(user.email);
                 setUid(user.uid);
-                setDisplayName(user.displayName.toLowerCase());
+                setDisplayName(user.displayName ? user.displayName.toLowerCase() : user.email);
                 setNewUrl(`/user/${uid}`); 
                 setUserLoggedIn(true);
                 const newArr = posts.filter(post => post.user.toLowerCase() === displayName);
@@ -74,6 +74,25 @@ const User = ({ posts, likePost, dislikePost }) => {
         document.querySelector('#displayName').value = '';        
     }
 
+    const verifyEmail = () => {
+        sendEmailVerification(auth.currentUser)
+            .then(() => {
+                alert('Email verification sent.')
+            });
+    }
+
+    const resetPassword = () => {
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert('Password reset email sent')
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorCode, errorMessage)
+  });
+    }
+
 
     return ( 
         <div>
@@ -93,18 +112,26 @@ const User = ({ posts, likePost, dislikePost }) => {
                     User Data
                 </Typography>
 
+                <Typography variant="p" align="center" style={{width: '80%'}}>User Email: {email}</Typography>
+
+
                 <Grid container spacing={2} style={{width: '80%', margin: 'auto'}}>
-                    <Grid item xs={10} style={{padding: 0}}>
-                        <TextField id="displayName" label="Enter a display name." onChange={(e) => setNewDisplayName(e.target.value)} variant="standard" style = {{width: '90%', padding: 0}} />
+                    <Grid item xs={6} style={{padding: 0, display: 'flex', alignItems: 'center'}}>
+                        <Typography variant="p" align="center"  style={{width: '80%'}}>Display Name: {displayName}</Typography>
                     </Grid>
-                    <Grid item xs={2} style={{padding: 0, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end'}}>
-                        <Button size="small" variant="outlined" sx={{backgroundColor: 'white', padding: 0, alignSelf: 'center', justifySelf: 'center'}} onClick={updateName}  style={{padding: 0,  verticalAlign: 'middle'}}>Update</Button>
+
+                    <Grid item xs={6} style={{padding: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                        <TextField id="displayName" align="center" label="New display name" onChange={(e) => setNewDisplayName(e.target.value)} variant="standard" style = {{width: '90%', padding: 0}} />
+                        <Button size="small" variant="outlined" sx={{backgroundColor: 'white', padding: 0, alignSelf: 'center'}} onClick={updateName}  style={{padding: 0,  verticalAlign: 'middle'}}>Update</Button>
                     </Grid>
                 </Grid>
                 
-                <Typography variant="p" align="center" style={{width: '80%'}}>User Email: {email}</Typography>
-                <Typography variant="p" align="center"  style={{width: '80%'}}>Display Name: {displayName}</Typography>
-                <Typography variant="h6" align="center" style={{borderTop: '1px solid black', width: '100%'}}>Posts Submitted by User:</Typography>
+                <Grid style={{width: '80%', marginTop: '1rem', display: 'flex', justifyContent: 'center', gap: '5px'}} >
+                    <Button size="small" variant="outlined" sx={{backgroundColor: 'white', padding: 0, alignSelf: 'center', justifySelf: 'center'}} onClick={verifyEmail}  style={{padding: 2,  verticalAlign: 'middle'}}>Verify Email</Button>
+                    <Button size="small" variant="outlined" sx={{backgroundColor: 'white', padding: 0, alignSelf: 'center', justifySelf: 'center'}} onClick={resetPassword}  style={{padding: 2,  verticalAlign: 'middle'}}>Reset Password</Button>
+                </Grid>
+
+                <Typography variant="p" align="center" style={{width: '100%', borderTop: '1px solid black', marginTop: '2rem'}}>Posts Submitted by User:</Typography>
 
                 {userPosts}
 

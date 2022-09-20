@@ -40,7 +40,6 @@ function App() {
   }
 
 
-
   const likePost = async (id) => {
     let postIndex = posts.findIndex((item) => item.id === id)
     if (postIndex !== -1) {

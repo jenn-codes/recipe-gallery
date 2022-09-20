@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -12,9 +12,12 @@ import uniqid from 'uniqid'
 import { collection, addDoc } from "firebase/firestore"; 
 import { db } from '../firebase';
 import { useNavigate } from "react-router-dom";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 
 const AddPost = ({posts, refresh}) => {
+
+    const auth = getAuth();
 
     let boards = [];
     posts.forEach(post => {
@@ -28,9 +31,29 @@ const AddPost = ({posts, refresh}) => {
     const [body, setBody] = useState('')
     const [url, setUrl] = useState('')
     const [image, setImage] = useState('')
+    const [username, setUsername] = useState('')
+    const userRef = useRef();
 
     const handleTitle = (e) => {
         setTitle(e.target.value);
+    }
+
+    useEffect(() => {
+        handleUser()
+    })
+    
+    const handleUser = () => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setUsername(user.displayName ? user.displayName : user.email);
+                console.log(username);
+                userRef.current.value = username;
+
+            } else {
+                setUsername(userRef.current.value);
+                console.log(username);
+            }
+        })
     }
 
     const handleBoard = (e) => {
@@ -62,7 +85,7 @@ const AddPost = ({posts, refresh}) => {
             'url': url,
             'image': image,
             'likes': 0,
-            'user': 'jenntest',
+            'user': username,
             'id': id,         
             'time': currentDate
         });
@@ -98,7 +121,8 @@ const AddPost = ({posts, refresh}) => {
                 </Typography>
                 
                 <TextField id="title" label="Enter a title for your post" onChange={handleTitle} variant="standard" style = {{width: '80%'}}/>
-                
+                <TextField id="user" inputRef={userRef} label="Enter a username" onChange={handleUser} variant="standard" style = {{width: '80%'}} />
+
                 <FormControl size="small"  style = {{width: '80%'}}     >
                         <InputLabel >Choose a board</InputLabel>
                         <Select
