@@ -60,7 +60,7 @@ const PostCard = ({ board,
                             Posted under <Link to={`/board/${board}/`}>{board}</Link>
                         </Typography>
                         <Typography variant="caption" align="left" component="div">
-                            Posted on {date} by <Link to={`/user/${user}/`}>{user}</Link>
+                            Posted on {date} by {user}
                         </Typography>
                         <Link to={`/post/${id}/`} style={{ textDecoration: 'none' }}>
                         <Typography variant="h4" align="left" color="black" component="div">

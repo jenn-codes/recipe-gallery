@@ -24,6 +24,8 @@ const Comments = ({ comments, postId }) => {
     const [replyStatus, setReplyStatus] = useState(false);
     const [replyComment, setReplyComment] = useState(null)
 
+    
+
     const saveName = (e) => {
         setName(e.target.value);
     }
@@ -57,12 +59,13 @@ const Comments = ({ comments, postId }) => {
     const findCommentIndexes = (item) => {
         let parentIndex, childIndex
         let parentComments = postComments.filter(el => 'children' in el)
-            parentComments.forEach(element => {
-                (element.children.forEach(i => {
-                    if (i.comment.includes(item.comment)) {
-                        const parentComment = element
-                        parentIndex = parentComments.indexOf(parentComment);
-                        childIndex = parentComment.children.indexOf(i);
+        console.log(parentComments)
+        parentComments.forEach(element => {
+            (element.children.forEach(i => {
+                if (i.comment.includes(item.comment)) {
+                    const parentComment = element
+                    parentIndex = postComments.indexOf(parentComment);
+                    childIndex = parentComment.children.indexOf(i);
     }}))})
     return [parentIndex, childIndex]
     }
@@ -72,6 +75,7 @@ const Comments = ({ comments, postId }) => {
         // check for nested comment
         if (commentIndex === -1) {
             const [parentIndex, childIndex] = findCommentIndexes(item)
+            console.log(parentIndex, childIndex)
             let newComments = postComments.slice()
             newComments[parentIndex]['children'][childIndex].likes += 1
             setPostComments(newComments);
@@ -81,7 +85,8 @@ const Comments = ({ comments, postId }) => {
             newComments[commentIndex].likes += 1;
             setPostComments(newComments);
             updateDB(newComments)
-    }}
+        }
+    }
 
     
     const dislikeComment = async (item) => {
@@ -108,6 +113,7 @@ const Comments = ({ comments, postId }) => {
 
     const submitReply = async () => {
         const commentIndex = postComments.indexOf(replyComment)
+  
         let newComments = postComments.slice();
         newComments[commentIndex]['children'] = [{
             'user': name,
@@ -117,7 +123,6 @@ const Comments = ({ comments, postId }) => {
         setPostComments(newComments);
         updateDB(newComments);
         setShowForm(false);
-
     }
 
     const share = (item) => {
