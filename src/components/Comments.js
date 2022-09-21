@@ -3,7 +3,6 @@ import uniqid from 'uniqid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Divider from '@mui/material/Divider';
-import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import { db } from '../firebase';
@@ -55,72 +54,59 @@ const Comments = ({ comments, postId }) => {
         }) 
     }
 
-    // calculate parent & child indices of nested comments
-    const findCommentIndexes = (item) => {
-        let parentIndex, childIndex
-        let parentComments = postComments.filter(el => 'children' in el)
-        console.log(parentComments)
-        parentComments.forEach(element => {
-            (element.children.forEach(i => {
-                if (i.comment.includes(item.comment)) {
-                    const parentComment = element
-                    parentIndex = postComments.indexOf(parentComment);
-                    childIndex = parentComment.children.indexOf(i);
-    }}))})
-    return [parentIndex, childIndex]
-    }
+    // // calculate parent & child indices of nested comments
+    // const findCommentIndexes = (item) => {
+    //     let parentIndex, childIndex
+    //     let parentComments = postComments.filter(el => 'children' in el)
+    //     console.log(parentComments)
+    //     parentComments.forEach(element => {
+    //         (element.children.forEach(i => {
+    //             if (i.comment.includes(item.comment)) {
+    //                 const parentComment = element
+    //                 parentIndex = postComments.indexOf(parentComment);
+    //                 childIndex = parentComment.children.indexOf(i);
+    // }}))})
+    // return [parentIndex, childIndex]
+    // }
 
     const likeComment = async (item) => {
         const commentIndex = postComments.indexOf(item) 
-        // check for nested comment
-        if (commentIndex === -1) {
-            const [parentIndex, childIndex] = findCommentIndexes(item)
-            console.log(parentIndex, childIndex)
-            let newComments = postComments.slice()
-            newComments[parentIndex]['children'][childIndex].likes += 1
-            setPostComments(newComments);
-            updateDB(newComments)
-        } else {
-            let newComments = postComments.slice()
-            newComments[commentIndex].likes += 1;
-            setPostComments(newComments);
-            updateDB(newComments)
-        }
+        let newComments = postComments.slice()
+        newComments[commentIndex].likes += 1;
+        setPostComments(newComments);
+        updateDB(newComments)
+        
     }
 
     
     const dislikeComment = async (item) => {
         const commentIndex = postComments.indexOf(item)
-        // check for nested comment
-        if (commentIndex === -1) {
-            const [parentIndex, childIndex] = findCommentIndexes(item)
-            let newComments = postComments.slice()
-            newComments[parentIndex]['children'][childIndex].likes -= 1
-            setPostComments(newComments);
-            updateDB(newComments)
-        } else {
-            let newComments = postComments.slice();
-            newComments[commentIndex].likes -= 1;
-            setPostComments(newComments);
-            updateDB(newComments)
-    }}
-
-    const reply = async (item) => {
-        setReplyComment(item);
-        setShowForm(true);
-        setReplyStatus(true);        
+        let newComments = postComments.slice();
+        newComments[commentIndex].likes -= 1;
+        setPostComments(newComments);
+        updateDB(newComments)
     }
 
-    const submitReply = async () => {
-        const commentIndex = postComments.indexOf(replyComment)
+    const reply = (item) => {
+        setReplyComment(item);
+        setShowForm(true);
+        setReplyStatus(true);
+        console.log(item)        
+    }
+
+    const submitReply = () => {
   
         let newComments = postComments.slice();
-        newComments[commentIndex]['children'] = [{
+        newComments.push({
             'user': name,
             'comment': comment,
-            'likes': 0
-        }]
+            'likes': 0,
+            'replyingTo': replyComment.user,
+            'replyingComment': replyComment.comment
+        })
+        console.log(newComments)
         setPostComments(newComments);
+
         updateDB(newComments);
         setShowForm(false);
     }
@@ -131,22 +117,25 @@ const Comments = ({ comments, postId }) => {
 
     const displayComment = (item) => {
         return (
-            <div>
+            <Box >
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
                     <Avatar sx={{bgcolor: 'darkorange'}}>{item.user[0]}</Avatar>
                 </ListItemAvatar>
 
-                <ListItemText
-                primary={item.comment}
-                secondary={
-                    <React.Fragment>
-                        {item.user}
-                    </React.Fragment>
+                <Box>
+                {item.replyingTo ? 
+                <Box>                
+                    <Typography style={{fontSize: '0.8em', verticalAlign: 'middle'}} color="text.secondary">replying to {item.replyingTo}: {item.replyingComment}</Typography>
+                    <Typography variant="h6">{item.comment}</Typography>
+                </Box>
+                :
+                <Typography variant="h6">{item.comment}</Typography> 
                 }
-                />
+                <Typography variant="p" display="block" color="text.secondary">{item.user}</Typography>
+                </Box>
+
             </ListItem>
-            
             <ListItem alignItems="flex-start">
             <Button size="small" onClick={() => likeComment(item)} ><ArrowCircleUpOutlinedIcon /></Button>
             {item.likes ? 
@@ -158,7 +147,7 @@ const Comments = ({ comments, postId }) => {
             <Button size="small" onClick={() => share(item)}>SHARE</Button>
             </ListItem>    
             <Divider  />
-            </div>)
+            </Box>)
         }
 
     const displayForm = () => {
@@ -214,15 +203,6 @@ const Comments = ({ comments, postId }) => {
                     return (     
                         <div key={uniqid()}>
                             {displayComment(item)}
-                            {item.children !== undefined ?
-                            item.children.map(item => {
-                                return (     
-                                    <div key={uniqid()} style={{paddingLeft: 20}}>
-                                        {displayComment(item)}
-                                    </div>
-                                )
-                            }) : ' '
-                            }
                         </div>
                     )}
                 )}
